@@ -9,9 +9,10 @@ namespace Robots
         {
             var robots = new Collection<Robot>();
            
-            Robot[] misRobots = new Robot[] { new RobotRaspi(), new RobotPC(), new RobotArduino() };
-            foreach (Robot r in misRobots) robots.Add(r);
-            
+            robots.Add(new RobotRaspi());
+            robots.Add(new RobotPC());
+            robots.Add(new RobotArduino());
+
             //intocable
             foreach (var robot in robots)
             {
@@ -21,36 +22,26 @@ namespace Robots
         }
     }
 
-    interface IParaDoStuff
+    public abstract class Robot
     {
-        void DoStuff();
-    }
-    class Robot
-    {
-        public virtual void DoStuff()
-        {
-            Console.WriteLine("Es el hacer cosas de la clase superior Robot");
-        }
-
+        public abstract void DoStuff();
     }
 
-    class RobotRaspi:Robot,IParaDoStuff
+    public class RobotRaspi:Robot
     {
         public override void DoStuff()
         {
             Console.WriteLine("el texto de DoStuff para el de RobotRaspi");
         }
     }
-
-    class RobotPC: Robot,IParaDoStuff
+    public class RobotPC: Robot
     {
         public override void DoStuff()
         {
             Console.WriteLine("el texto de DoStuff para el RobotPC");
         }
     }
-
-    class RobotArduino: Robot,IParaDoStuff 
+    public class RobotArduino: Robot 
     {
         public override void DoStuff()
         {
