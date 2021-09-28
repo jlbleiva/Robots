@@ -8,23 +8,10 @@ namespace Robots
         static void Main(string[] args)
         {
             var robots = new Collection<Robot>();
-            Robot robot1 = new Robot();
-            Robot robot2 = new Robot();
-            Robot robot3 = new Robot();
-
-            robot1.Origen = "Raspberry";
-            robot2.Origen = "PC";
-            robot3.Origen = "Arduino";
-
-            robot1.Ability  = "Habla francés";
-            robot2.Ability = "Cuida perros";
-            robot3.Ability = "Hace ruido";
-
+           
+            Robot[] misRobots = new Robot[] { new RobotRaspi(), new RobotPC(), new RobotArduino() };
+            foreach (Robot r in misRobots) robots.Add(r);
             
-            robots.Add(robot1 );
-            robots.Add(robot2);
-            robots.Add(robot3);
-
             //intocable
             foreach (var robot in robots)
             {
@@ -34,26 +21,40 @@ namespace Robots
         }
     }
 
+    interface IParaDoStuff
+    {
+        void DoStuff();
+    }
     class Robot
     {
-        private string  _origen;
-        private string _ability;
-
-        public string Origen
+        public virtual void DoStuff()
         {
-            get => _origen;
-            set => _origen = value;
+            Console.WriteLine("Es el hacer cosas de la clase superior Robot");
         }
 
-        public string Ability
-        {
-            get => _ability;
-            set => _ability = value;
-        }
+    }
 
-        public void DoStuff()
+    class RobotRaspi:Robot,IParaDoStuff
+    {
+        public override void DoStuff()
         {
-            Console.WriteLine("El origen del robot es {0} y la habilidad es {1}",_origen,_ability);
+            Console.WriteLine("el texto de DoStuff para el de RobotRaspi");
+        }
+    }
+
+    class RobotPC: Robot,IParaDoStuff
+    {
+        public override void DoStuff()
+        {
+            Console.WriteLine("el texto de DoStuff para el RobotPC");
+        }
+    }
+
+    class RobotArduino: Robot,IParaDoStuff 
+    {
+        public override void DoStuff()
+        {
+            Console.WriteLine("el texto de DoStuff para el RobotArduino");
         }
     }
 }
