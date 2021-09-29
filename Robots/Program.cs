@@ -7,12 +7,8 @@ namespace Robots
     {
         static void Main(string[] args)
         {
-            var robots = new Collection<Robot>();
-           
-            robots.Add(new RobotRaspi());
-            robots.Add(new RobotPC());
-            robots.Add(new RobotArduino());
-
+            var robots = new Collection<Robot>(){ new RobotRaspi() , new RobotPC(), new RobotArduino() };
+            
             //intocable
             foreach (var robot in robots)
             {
