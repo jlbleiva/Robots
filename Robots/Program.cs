@@ -9,9 +9,9 @@ namespace Robots
     {
         static void Main(string[] args)
         {
-            var pc = new RobotPC(new RobotPCBehavior());
-            var arduino = new RobotArduino(new RobotArduinoBehavior());
-            var raspi = new RobotRaspi(new RobotRaspiBehavior());
+            var pc = new RobotPC(new SpeakDeutsh(),new SpeakEnglish());
+            var arduino = new RobotArduino(new SpeakEnglish(),new SpeakSpanish());
+            var raspi = new RobotRaspi(new SpeakSpanish(), new SpeakRussian());
 
             var robots = new Collection<Robot>(){pc,arduino,raspi};
             
@@ -21,40 +21,68 @@ namespace Robots
                
                 robot.DoStuff();
             }
+           
+            pc.ChangeLanguage2(new SpeakSpanish());
+
+            Console.WriteLine("=====================================");
+            Console.WriteLine("Tras los cambios");
+            foreach (var robot in robots)
+            {
+
+                robot.DoStuff();
+            }
             
+          
         }
     }
 
     
-    public interface IRobot
+    public interface ISpeakLanguage
     {
-        public void Show();
+        public string  ShowLanguage();
     }
 
     public abstract class Robot
     {
-        private IRobot _Robotbehavior;
-        
-        public Robot(IRobot behavior)
+
+        private string firstLanguage;
+        private string secondLanguage;
+
+        private ISpeakLanguage _speakLanguage1;
+        private ISpeakLanguage _speakLanguage2;
+
+       
+
+        public Robot(ISpeakLanguage behavior1, ISpeakLanguage behavior2)
         {
-            _Robotbehavior = behavior;
+            _speakLanguage1 = behavior1;
+            _speakLanguage2 = behavior2;
+
         }
 
         public void DoStuff()
         {
-            _Robotbehavior.Show();
+            Console.WriteLine("Primer idioma: {0}", _speakLanguage1.ShowLanguage());
+            Console.WriteLine("Segundo idioma: {0}", _speakLanguage2.ShowLanguage());
+            Console.WriteLine("=====================================");
         }
 
         //cambia el comportamiento de cada tipo de robot
-        public void ChangeBehavior(IRobot robotBehavior)
+        public void ChangeLanguage1(ISpeakLanguage language)
         {
-            _Robotbehavior = robotBehavior;
+            _speakLanguage1 = language;
         }
+
+        public void ChangeLanguage2(ISpeakLanguage language)
+        {
+            _speakLanguage2 = language;
+        }
+
     }
     
     public class RobotRaspi: Robot
     {
-        public RobotRaspi(IRobot _robotBahavior) : base(_robotBahavior)
+        public RobotRaspi(ISpeakLanguage _speakLanguage1, ISpeakLanguage _speakLanguage2) : base(_speakLanguage1, _speakLanguage2)
         {
 
         }
@@ -62,41 +90,51 @@ namespace Robots
     }
     public class RobotPC: Robot
     {
-        public RobotPC(IRobot _robotBahavior) : base(_robotBahavior)
+        public RobotPC(ISpeakLanguage _speakLanguage1, ISpeakLanguage _speakLanguage2) : base(_speakLanguage1, _speakLanguage2)
         {
 
         }
     }
     public class RobotArduino: Robot 
     {
-        public RobotArduino(IRobot _robotBehavior) : base(_robotBehavior)
+        public RobotArduino(ISpeakLanguage _speakLanguage1, ISpeakLanguage _speakLanguage2) : base(_speakLanguage1, _speakLanguage2)
         {
 
         }
         
     }
 
-    public class RobotPCBehavior : IRobot
+    public class SpeakEnglish : ISpeakLanguage
     {
-       public void Show()
-        {
-          Console.WriteLine("Soy PC listo");
-        }
-    }
-    public class RobotArduinoBehavior : IRobot
-    {
-        
-        public void Show()
-        {
-            Console.WriteLine("Soy Arduino listo");
-        }
-    }
-    public class RobotRaspiBehavior : IRobot
-    {
+     
 
-        public void Show()
+        public string ShowLanguage()
         {
-            Console.WriteLine("Soy Raspi listo");
+           return ("I speak english");
+        }
+    }
+
+    public class SpeakSpanish : ISpeakLanguage
+    {
+        public string  ShowLanguage()
+        {
+            return ("I speak spanish");
+        }
+    }
+
+    public class SpeakDeutsh : ISpeakLanguage
+    {
+        public string  ShowLanguage()
+        {
+            return ("I speak deutsh");
+        }
+    }
+
+    public class SpeakRussian : ISpeakLanguage
+    {
+        public string  ShowLanguage()
+        {
+            return ("I speak russian");
         }
     }
 }
