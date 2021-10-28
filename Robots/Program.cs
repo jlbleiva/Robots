@@ -18,17 +18,11 @@ namespace Robots
             //intocable
             foreach (var robot in robots)
             {
-               
-                robot.DoStuff();
+              robot.DoStuff();
             }
-           
-           
-            
-            
-          
+                    
         }
     }
-
     
     public interface ISpeakLanguage
     {
@@ -48,14 +42,10 @@ namespace Robots
 
         private ISpeakLanguage _speakLanguage1;
         private IOtherSkill _skill;
-
-       
-
         public Robot(ISpeakLanguage behavior1, IOtherSkill skill)
         {
             _speakLanguage1 = behavior1;
             _skill = skill;
-
         }
 
         public void DoStuff()
@@ -70,45 +60,34 @@ namespace Robots
         {
             _speakLanguage1 = language;
         }
-
-      
-
     }
     
     public class RobotRaspi: Robot
     {
         public RobotRaspi(ISpeakLanguage _speakLanguage1, IOtherSkill _skill) : base(_speakLanguage1, _skill)
         {
-
-        }
-        
+        }        
     }
     public class RobotPC: Robot
     {
         public RobotPC(ISpeakLanguage _speakLanguage1, IOtherSkill _skill) : base(_speakLanguage1, _skill)
         {
-
         }
     }
     public class RobotArduino: Robot 
     {
         public RobotArduino(ISpeakLanguage _speakLanguage1, IOtherSkill _skill) : base(_speakLanguage1, _skill)
         {
-
         }
-        
     }
 
     public class SpeakEnglish : ISpeakLanguage
     {
-     
-
         public string ShowLanguage()
         {
            return ("I speak english");
         }
     }
-
     public class SpeakSpanish : ISpeakLanguage
     {
         public string  ShowLanguage()
